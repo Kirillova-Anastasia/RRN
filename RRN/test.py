@@ -149,7 +149,8 @@ def test(test_loader, rrn, scale, scene_name, n_c):
     return PSNR_t, SSIM_t
 
 def save_img(prediction, scene_name, image_num):
-    save_dir = os.path.join(opt.image_out, systime)
+    #save_dir = os.path.join(opt.image_out, systime)
+    save_dir = opt.image_out
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     image_dir = os.path.join(save_dir, '{}_{:03}'.format(scene_name, image_num+1) + '.png')

@@ -28,6 +28,7 @@ parser.add_argument('--gpus', default=1, type=int, help='number of gpu')
 parser.add_argument('--cuda',default=True, type=bool)
 parser.add_argument('--layer', type=int, default=10, help='network layer')
 parser.add_argument('--test_dir',type=str,default='/home/panj/data/Vid4')
+parser.add_argument('--scene_name',type=str,default='')
 #parser.add_argument('--test_dir',type=str,default='/home/panj/data/udm10')
 #parser.add_argument('--test_dir',type=str,default='/home/panj/data/SPMC_test')
 parser.add_argument('--save_test_log', type=str,default='./log/test')
@@ -67,7 +68,8 @@ def main():
 
     print('===> Loading test Datasets')
     
-    scene_list = os.listdir(opt.test_dir)
+    #scene_list = os.listdir(opt.test_dir)
+    scene_list = [opt.scene_name]
     
     for scene_name in scene_list:
         test_set = get_eval_set(opt.test_dir, opt.scale, scene_name)
@@ -108,7 +110,8 @@ def test(test_loader, rrn, scale, scene_name, n_c):
     return
 
 def save_img(prediction, scene_name, image_num):
-    save_dir = os.path.join(opt.image_out, systime)
+    #save_dir = os.path.join(opt.image_out, systime)
+    save_dir = opt.image_out
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     save_dir = os.path.join(save_dir, scene_name)
@@ -203,4 +206,12 @@ def calculate_ssim(img1, img2):
 
 
 if __name__=='__main__':
+    with open(os.path.join(opt.image_out, 'RRN-{}L.txt'.format(args.L)), 'a') as f:
+        f.write('OK ' + opt.scene_name + '\n')
+    begin = time.time()
+
     main()
+
+    end = time.time()
+    with open(os.path.join(opt.image_out, 'RRN-{}L.txt'.format(args.L)), 'a') as f:
+        f.write('Full time on {}: {}\n'.format(opt.scene_name, end - begin))
