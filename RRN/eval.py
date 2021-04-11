@@ -206,12 +206,12 @@ def calculate_ssim(img1, img2):
 
 
 if __name__=='__main__':
-    with open(os.path.join(opt.image_out, 'RRN-{}L.txt'.format(opt.L)), 'a') as f:
+    with open(os.path.join(opt.image_out, 'RRN-{}L.txt'.format(opt.num_layers)), 'a') as f:
         f.write('OK ' + opt.scene_name + '\n')
     begin = time.time()
 
     main()
 
     end = time.time()
-    with open(os.path.join(opt.image_out, 'RRN-{}L.txt'.format(opt.L)), 'a') as f:
+    with open(os.path.join(opt.image_out, 'RRN-{}L.txt'.format(opt.num_layers)), 'a') as f:
         f.write('Full time on {}: {}\n'.format(opt.scene_name, end - begin))
